@@ -1,0 +1,4 @@
+transaction_id,date,category,amount
+t-1001,2026-09-01,office,12.50
+t-1002,2026-09-02,software,19.99
+t-1005,2026-09-04,office,3.10

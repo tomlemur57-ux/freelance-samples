@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout fix sample — minimum width overflow</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.45 system-ui, sans-serif; color: #17212b; background: #f3f5f7; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .page { max-width: 980px; margin: 0 auto; padding: 32px 20px 48px; }
+    h1, h2, p { margin-top: 0; }
+    h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.1; margin-bottom: 10px; }
+    .intro { max-width: 700px; color: #46515c; }
+    .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 24px 0 18px; }
+    button { border: 0; border-radius: 8px; padding: 11px 16px; font: inherit; font-weight: 700; color: #fff; background: #1769aa; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #f2b84b; outline-offset: 3px; }
+    .mode { font-size: .92rem; color: #46515c; }
+    .demo { border: 1px solid #ccd4dc; border-radius: 12px; background: #fff; padding: 16px; overflow: visible; }
+    .demo-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: .9rem; color: #46515c; }
+    .dashboard { display: grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap: 12px; }
+    .card { min-width: 0; border: 1px solid #d8e0e7; border-radius: 8px; padding: 14px; background: #f8fafb; }
+    .card h2 { font-size: 1rem; margin-bottom: 7px; }
+    .metric { font-size: 1.65rem; font-weight: 800; }
+    .note { margin: 20px 0 0; padding: 14px; border-left: 4px solid #1769aa; background: #eaf3fb; color: #30404d; }
+    [data-mode="original"] .dashboard { min-width: 680px; }
+    [data-mode="original"] .card { min-width: 0; }
+    [data-mode="fix"] .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
+    @media (max-width: 520px) { .page { padding-inline: 14px; } [data-mode="fix"] .dashboard { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-mode="original">
+  <main class="page">
+    <h1>Layout fix sample: narrow-screen overflow</h1>
+    <p class="intro">A synthetic dashboard reproduces one small responsive issue: a two-column grid keeps a 680px minimum width, so the page scrolls sideways on a 360px screen. Switch views to compare the original rule with the corrected CSS.</p>
+    <div class="controls">
+      <button id="toggle" type="button" aria-pressed="false">Show fix</button>
+      <span id="mode" class="mode" role="status">Showing original · horizontal overflow is expected on narrow screens</span>
+    </div>
+    <section class="demo" aria-labelledby="demo-title">
+      <div class="demo-label"><strong id="demo-title">Synthetic dashboard</strong><span>Sample data</span></div>
+      <div class="dashboard">
+        <article class="card"><h2>Open requests</h2><div class="metric">18</div><div>4 need a reply today</div></article>
+        <article class="card"><h2>Resolved this week</h2><div class="metric">42</div><div>Up 12% from last week</div></article>
+        <article class="card"><h2>Average response</h2><div class="metric">2h 14m</div><div>Within the 4h target</div></article>
+        <article class="card"><h2>Pending review</h2><div class="metric">7</div><div>Next review at 14:00</div></article>
+      </div>
+    </section>
+    <p class="note"><strong>Correction:</strong> replace the fixed grid minimum with <code>minmax(0, 1fr)</code> and allow one column at narrow widths. This keeps cards inside the viewport without changing the content.</p>
+  </main>
+  <script>
+    const button = document.querySelector('#toggle');
+    const mode = document.querySelector('#mode');
+    button.addEventListener('click', () => {
+      const fixed = document.body.dataset.mode !== 'fix';
+      document.body.dataset.mode = fixed ? 'fix' : 'original';
+      button.setAttribute('aria-pressed', String(fixed));
+      button.textContent = fixed ? 'Show original' : 'Show fix';
+      mode.textContent = fixed ? 'Showing fix · no horizontal overflow at narrow widths' : 'Showing original · horizontal overflow is expected on narrow screens';
+    });
+  </script>
+</body>
+</html>

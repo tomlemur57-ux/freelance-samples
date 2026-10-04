@@ -1,0 +1,16 @@
+{
+  "input_file": "sample_transactions.csv",
+  "rows_read": 6,
+  "rows_written": 3,
+  "invalid_rows": 2,
+  "duplicate_rows": 1,
+  "total_amount": "35.59",
+  "totals_by_category": {
+    "office": "15.60",
+    "software": "19.99"
+  },
+  "errors": [
+    "line 5: date must be YYYY-MM-DD",
+    "line 6: missing category"
+  ]
+}

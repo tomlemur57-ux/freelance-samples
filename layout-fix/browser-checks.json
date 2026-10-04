@@ -1,0 +1,42 @@
+[
+  {
+    "case": "original-360",
+    "observed": {
+      "columns": "334px 334px",
+      "mode": "original",
+      "pressed": "false",
+      "scrollWidth": 711,
+      "width": 360
+    }
+  },
+  {
+    "case": "fix-360-keyboard",
+    "observed": {
+      "columns": "298px",
+      "mode": "fix",
+      "pressed": "true",
+      "scrollWidth": 360,
+      "width": 360
+    }
+  },
+  {
+    "case": "fix-768",
+    "observed": {
+      "columns": "341px 341px",
+      "mode": "fix",
+      "pressed": "true",
+      "scrollWidth": 768,
+      "width": 768
+    }
+  },
+  {
+    "case": "fix-1280",
+    "observed": {
+      "columns": "447px 447px",
+      "mode": "fix",
+      "pressed": "true",
+      "scrollWidth": 1280,
+      "width": 1280
+    }
+  }
+]
